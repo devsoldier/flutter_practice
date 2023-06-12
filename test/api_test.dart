@@ -9,7 +9,6 @@ import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'mocked_data/mock_data.dart';
 
 void main() {
-  late Dio dioConfig;
   late DioAdapter dioAdapter;
   final mealAPI = MealApiService.instance;
 
