@@ -4,13 +4,19 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import 'package:flutter_practice/repository/api/client/dio_config.dart';
 import 'package:flutter_practice/utilities/constant.dart';
 
-import 'dio_config.dart';
+import 'api_client_base/api_client_base.dart';
 
-enum BaseURL { meal, drink }
+class DioApiClient extends ApiClientBase {
+  final Dio dio;
 
-abstract class ApiClientBase {
+  DioApiClient(
+    this.dio,
+  );
+
+  @override
   Future<Response> request(
     RequestMethod method,
     String path, {

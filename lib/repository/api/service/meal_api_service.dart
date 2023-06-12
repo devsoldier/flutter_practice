@@ -1,26 +1,29 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter_practice/repository/api/client/api_client_base.dart';
+
+import 'package:flutter_practice/repository/api/client/api_client_base/api_client_base.dart';
 import 'package:flutter_practice/repository/api/client/dio_config.dart';
 import 'package:flutter_practice/repository/api/service/service_base/service_base.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meal_details.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meals.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meals_category.dart';
+import 'package:flutter_practice/utilities/constant.dart';
 import 'package:flutter_practice/utilities/result.dart';
 
-class MealApiService extends ApiClientBase implements ServiceBase<Result> {
-  MealApiService._privateConstructor();
+class MealApiService implements ServiceBase<Result> {
+  final ApiClientBase apiClient;
 
-  static final MealApiService _instance = MealApiService._privateConstructor();
-
-  static MealApiService get instance => _instance;
+  MealApiService({
+    required this.apiClient,
+  });
 
   final mealUrl = BaseURL.meal;
 
   @override
   Future<Result<Meals<MealsCategory>>> getCategories() async {
     try {
-      final response = await request(
+      final response = await apiClient.request(
         RequestMethod.get,
         '/list.php?c=list',
         baseUrl: mealUrl,
@@ -39,7 +42,7 @@ class MealApiService extends ApiClientBase implements ServiceBase<Result> {
   Future<Result<Meals<MealsCategoryDetails>>> getCategoryDetails(
       String? category) async {
     try {
-      final response = await request(
+      final response = await apiClient.request(
         RequestMethod.get,
         '/filter.php?c=$category',
         baseUrl: mealUrl,
@@ -58,7 +61,7 @@ class MealApiService extends ApiClientBase implements ServiceBase<Result> {
   @override
   Future<Result<Meals<MealDetails>>> getDetails(int? mealID) async {
     try {
-      final response = await request(
+      final response = await apiClient.request(
         RequestMethod.get,
         '/lookup.php?i=$mealID',
         baseUrl: mealUrl,

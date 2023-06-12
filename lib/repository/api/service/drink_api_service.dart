@@ -1,27 +1,27 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter_practice/repository/api/client/api_client_base.dart';
+import 'package:flutter_practice/repository/api/client/api_client_base/api_client_base.dart';
 import 'package:flutter_practice/repository/api/client/dio_config.dart';
 import 'package:flutter_practice/repository/api/service/service_base/service_base.dart';
 import 'package:flutter_practice/repository/data_class/drinks_data/drink_details.dart';
 import 'package:flutter_practice/repository/data_class/drinks_data/drinks.dart';
 import 'package:flutter_practice/repository/data_class/drinks_data/drinks_category.dart';
+import 'package:flutter_practice/utilities/constant.dart';
 import 'package:flutter_practice/utilities/result.dart';
 
-class DrinkApiService extends ApiClientBase implements ServiceBase<Result> {
-  DrinkApiService._privateConstructor();
+class DrinkApiService implements ServiceBase<Result> {
+  final ApiClientBase apiClient;
 
-  static final DrinkApiService _instance =
-      DrinkApiService._privateConstructor();
+  DrinkApiService({
+    required this.apiClient,
+  });
 
-  static DrinkApiService get instance => _instance;
-
-  final drinkURL = BaseURL.drink;
+  final drinkURL = BaseURL.meal;
 
   @override
   Future<Result<Drinks<DrinksCategory>>> getCategories() async {
     try {
-      final response = await request(
+      final response = await apiClient.request(
         RequestMethod.get,
         '/list.php?c=list',
         baseUrl: drinkURL,
@@ -40,7 +40,7 @@ class DrinkApiService extends ApiClientBase implements ServiceBase<Result> {
   Future<Result<Drinks<DrinksCategoryDetails>>> getCategoryDetails(
       String? category) async {
     try {
-      final response = await request(
+      final response = await apiClient.request(
         RequestMethod.get,
         '/filter.php?c=$category',
         baseUrl: drinkURL,
@@ -59,7 +59,7 @@ class DrinkApiService extends ApiClientBase implements ServiceBase<Result> {
   @override
   Future<Result<Drinks<DrinkDetails>>> getDetails(int? drinkID) async {
     try {
-      final response = await request(
+      final response = await apiClient.request(
         RequestMethod.get,
         '/lookup.php?i=$drinkID',
         baseUrl: drinkURL,

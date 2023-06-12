@@ -1,18 +1,21 @@
 import 'package:flutter_practice/feature/details/details_bloc/details_bloc.dart';
 import 'package:flutter_practice/feature/home/category_bloc/category_bloc.dart';
+import 'package:flutter_practice/repository/api/client/dio_api_client.dart';
 import 'package:flutter_practice/repository/api/client/dio_config.dart';
+import 'package:flutter_practice/repository/api/service/meal_api_service.dart';
+import 'package:flutter_practice/repository/api/service/service_base/service_base.dart';
 import 'package:flutter_practice/utilities/constant.dart';
 import 'package:flutter_practice/utilities/result.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:mockito/mockito.dart';
 
 import 'mocked_data/mock_data.dart';
 
-class MockCategoryBloc extends Mock implements CategoryBloc {}
-
 void main() {
   final dioAdapter = DioAdapter(dio: dio);
+  GetIt.I.registerSingleton<MealApiService>(
+      MealApiService(apiClient: DioApiClient(dio)));
   group('Category bloc | ', () {
     final bloc = CategoryBloc();
     test('initial |', () {

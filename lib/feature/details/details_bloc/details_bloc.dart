@@ -7,13 +7,13 @@ import 'package:flutter_practice/utilities/result.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 part 'details_event.dart';
 part 'details_state.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
-  final _mealAPI = MealApiService.instance;
-  // final mealAPI = GetIt.I<MealApiService>();
+  final _mealAPI = GetIt.I<MealApiService>();
   Result<Meals<MealDetails>>? mealDetails;
   List<String> ingredients = [];
   List<String> measures = [];

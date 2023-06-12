@@ -1,18 +1,25 @@
+import 'package:flutter_practice/repository/api/client/dio_api_client.dart';
 import 'package:flutter_practice/repository/api/client/dio_config.dart';
 import 'package:flutter_practice/repository/api/service/meal_api_service.dart';
+import 'package:flutter_practice/repository/api/service/service_base/service_base.dart';
 import 'package:flutter_practice/utilities/constant.dart';
 import 'package:flutter_practice/utilities/result.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 import 'mocked_data/mock_data.dart';
 
 void main() {
   late DioAdapter dioAdapter;
-  final mealAPI = MealApiService.instance;
+  late MealApiService mealAPI;
 
   setUpAll(() {
+    GetIt.I.registerSingleton<MealApiService>(
+        MealApiService(apiClient: DioApiClient(dio)));
+
+    mealAPI = GetIt.I<MealApiService>();
     dioAdapter = DioAdapter(dio: dio);
     dioAdapter.onGet('$mealURL/list.php?c=list', (server) {
       return server.reply(200, mockMealsCategory);
