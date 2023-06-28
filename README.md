@@ -49,3 +49,7 @@ material_segmented_control
 -| mocked_data  - Contains mocked api data for testing
 
 -| parsing_test
+
+-| bloc_test
+
+-| api_test
