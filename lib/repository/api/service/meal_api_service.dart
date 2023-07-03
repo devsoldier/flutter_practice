@@ -1,10 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
+// ignore: unused_import
 import 'dart:developer';
 
-import 'package:flutter_practice/repository/api/client/api_client_base/api_client_base.dart';
 import 'package:flutter_practice/repository/api/client/dio_config.dart';
-import 'package:flutter_practice/repository/api/service/service_base/service_base.dart';
+import 'package:flutter_practice/repository/api/service/api_service/api_service.dart';
+import 'package:flutter_practice/repository/api/service/api_service/service_base.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meal_details.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meals.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meals_category.dart';
@@ -12,7 +11,8 @@ import 'package:flutter_practice/utilities/constant.dart';
 import 'package:flutter_practice/utilities/result.dart';
 
 class MealApiService implements ServiceBase<Result> {
-  final ApiClientBase apiClient;
+  // final ApiClientBase apiClient;
+  final ApiService apiClient;
 
   MealApiService({
     required this.apiClient,
@@ -23,16 +23,22 @@ class MealApiService implements ServiceBase<Result> {
   @override
   Future<Result<Meals<MealsCategory>>> getCategories() async {
     try {
-      final response = await apiClient.request(
-        RequestMethod.get,
-        '/list.php?c=list',
+      final response = await apiClient.makeRequest(
+        method: RequestMethod.get,
+        path: '/list.php?c=list',
         baseUrl: mealUrl,
+        fromJson: (json) => Meals<MealsCategory>.fromJson(
+          json,
+          (json) => MealsCategory.fromJson(json as Map<String, dynamic>),
+        ),
       );
-      final dataParsed = Meals<MealsCategory>.fromJson(
-        (response.data as Map<String, dynamic>),
-        (json) => MealsCategory.fromJson(json as Map<String, dynamic>),
-      );
-      return Result.success(dataParsed);
+      if (response.isSuccess) {
+        return response;
+      } else if (response.isFailure) {
+        throw Exception(response.message);
+      } else {
+        throw Exception('something went wrong');
+      }
     } catch (e, s) {
       return Result.failure('$e\n$s');
     }
@@ -42,17 +48,22 @@ class MealApiService implements ServiceBase<Result> {
   Future<Result<Meals<MealsCategoryDetails>>> getCategoryDetails(
       String? category) async {
     try {
-      final response = await apiClient.request(
-        RequestMethod.get,
-        '/filter.php?c=$category',
+      final response = await apiClient.makeRequest(
+        method: RequestMethod.get,
+        path: '/filter.php?c=$category',
         baseUrl: mealUrl,
+        fromJson: (json) => Meals<MealsCategoryDetails>.fromJson(
+          json,
+          (json) => MealsCategoryDetails.fromJson(json as Map<String, dynamic>),
+        ),
       );
-      final dataParsed = Meals<MealsCategoryDetails>.fromJson(
-        (response.data as Map<String, dynamic>),
-        (json) => MealsCategoryDetails.fromJson(json as Map<String, dynamic>),
-      );
-      log('parsing2 ${dataParsed.meals[0]!.strMeal}');
-      return Result.success(dataParsed);
+      if (response.isSuccess) {
+        return response;
+      } else if (response.isFailure) {
+        throw Exception(response.message);
+      } else {
+        throw Exception('something went wrong');
+      }
     } catch (e, s) {
       return Result.failure('$e\n$s');
     }
@@ -61,17 +72,22 @@ class MealApiService implements ServiceBase<Result> {
   @override
   Future<Result<Meals<MealDetails>>> getDetails(int? mealID) async {
     try {
-      final response = await apiClient.request(
-        RequestMethod.get,
-        '/lookup.php?i=$mealID',
+      final response = await apiClient.makeRequest(
+        method: RequestMethod.get,
+        path: '/lookup.php?i=$mealID',
         baseUrl: mealUrl,
+        fromJson: (json) => Meals<MealDetails>.fromJson(
+          json,
+          (json) => MealDetails.fromJson(json as Map<String, dynamic>),
+        ),
       );
-      final dataParsed = Meals<MealDetails>.fromJson(
-        (response.data as Map<String, dynamic>),
-        (json) => MealDetails.fromJson(json as Map<String, dynamic>),
-      );
-      log('parsing2 ${dataParsed.meals[0]!.strMeal}');
-      return Result.success(dataParsed);
+      if (response.isSuccess) {
+        return response;
+      } else if (response.isFailure) {
+        throw Exception(response.message);
+      } else {
+        throw Exception('something went wrong');
+      }
     } catch (e, s) {
       return Result.failure('$e\n$s');
     }

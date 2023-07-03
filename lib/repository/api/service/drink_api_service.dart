@@ -1,8 +1,8 @@
-import 'dart:convert';
+// ignore: unused_import
 import 'dart:developer';
-import 'package:flutter_practice/repository/api/client/api_client_base/api_client_base.dart';
 import 'package:flutter_practice/repository/api/client/dio_config.dart';
-import 'package:flutter_practice/repository/api/service/service_base/service_base.dart';
+import 'package:flutter_practice/repository/api/service/api_service/api_service.dart';
+import 'package:flutter_practice/repository/api/service/api_service/service_base.dart';
 import 'package:flutter_practice/repository/data_class/drinks_data/drink_details.dart';
 import 'package:flutter_practice/repository/data_class/drinks_data/drinks.dart';
 import 'package:flutter_practice/repository/data_class/drinks_data/drinks_category.dart';
@@ -10,7 +10,7 @@ import 'package:flutter_practice/utilities/constant.dart';
 import 'package:flutter_practice/utilities/result.dart';
 
 class DrinkApiService implements ServiceBase<Result> {
-  final ApiClientBase apiClient;
+  final ApiService apiClient;
 
   DrinkApiService({
     required this.apiClient,
@@ -21,16 +21,22 @@ class DrinkApiService implements ServiceBase<Result> {
   @override
   Future<Result<Drinks<DrinksCategory>>> getCategories() async {
     try {
-      final response = await apiClient.request(
-        RequestMethod.get,
-        '/list.php?c=list',
+      final response = await apiClient.makeRequest(
+        method: RequestMethod.get,
+        path: '/list.php?c=list',
         baseUrl: drinkURL,
+        fromJson: (json) => Drinks<DrinksCategory>.fromJson(
+          json,
+          (json) => DrinksCategory.fromJson(json as Map<String, dynamic>),
+        ),
       );
-      final dataParsed = Drinks<DrinksCategory>.fromJson(
-        (response.data as Map<String, dynamic>),
-        (json) => DrinksCategory.fromJson(json as Map<String, dynamic>),
-      );
-      return Result.success(dataParsed);
+      if (response.isSuccess) {
+        return response;
+      } else if (response.isFailure) {
+        throw Exception(response.message);
+      } else {
+        throw Exception('something went wrong');
+      }
     } catch (e, s) {
       return Result.failure('$e\n$s');
     }
@@ -40,36 +46,47 @@ class DrinkApiService implements ServiceBase<Result> {
   Future<Result<Drinks<DrinksCategoryDetails>>> getCategoryDetails(
       String? category) async {
     try {
-      final response = await apiClient.request(
-        RequestMethod.get,
-        '/filter.php?c=$category',
+      final response = await apiClient.makeRequest(
+        method: RequestMethod.get,
+        path: '/filter.php?c=$category',
         baseUrl: drinkURL,
+        fromJson: (json) => Drinks<DrinksCategoryDetails>.fromJson(
+          json,
+          (json) =>
+              DrinksCategoryDetails.fromJson(json as Map<String, dynamic>),
+        ),
       );
-      final dataParsed = Drinks<DrinksCategoryDetails>.fromJson(
-        (response.data as Map<String, dynamic>),
-        (json) => DrinksCategoryDetails.fromJson(json as Map<String, dynamic>),
-      );
-      log('parsing2 ${dataParsed.drinks[0]!.strDrink}');
-      return Result.success(dataParsed);
+      if (response.isSuccess) {
+        return response;
+      } else if (response.isFailure) {
+        throw Exception(response.message);
+      } else {
+        throw Exception('something went wrong');
+      }
     } catch (e, s) {
       return Result.failure('$e\n$s');
     }
   }
 
   @override
-  Future<Result<Drinks<DrinkDetails>>> getDetails(int? drinkID) async {
+  Future<Result<Drinks<DrinkDetails>>> getDetails(int? mealID) async {
     try {
-      final response = await apiClient.request(
-        RequestMethod.get,
-        '/lookup.php?i=$drinkID',
+      final response = await apiClient.makeRequest(
+        method: RequestMethod.get,
+        path: '/lookup.php?i=$mealID',
         baseUrl: drinkURL,
+        fromJson: (json) => Drinks<DrinkDetails>.fromJson(
+          json,
+          (json) => DrinkDetails.fromJson(json as Map<String, dynamic>),
+        ),
       );
-      final dataParsed = Drinks<DrinkDetails>.fromJson(
-        (response.data as Map<String, dynamic>),
-        (json) => DrinkDetails.fromJson(json as Map<String, dynamic>),
-      );
-      log('parsing2 ${dataParsed.drinks[0]!.strDrink}');
-      return Result.success(dataParsed);
+      if (response.isSuccess) {
+        return response;
+      } else if (response.isFailure) {
+        throw Exception(response.message);
+      } else {
+        throw Exception('something went wrong');
+      }
     } catch (e, s) {
       return Result.failure('$e\n$s');
     }

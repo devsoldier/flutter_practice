@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_practice/repository/api/client/dio_config.dart';
 import 'package:flutter_practice/utilities/constant.dart';
 
-import 'api_client_base/api_client_base.dart';
+import 'api_client/api_client_base.dart';
 
 class DioApiClient extends ApiClientBase {
   final Dio dio;
