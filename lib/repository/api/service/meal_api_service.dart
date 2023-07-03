@@ -12,10 +12,10 @@ import 'package:flutter_practice/utilities/result.dart';
 
 class MealApiService implements ServiceBase<Result> {
   // final ApiClientBase apiClient;
-  final ApiService apiClient;
+  final ApiService apiService;
 
   MealApiService({
-    required this.apiClient,
+    required this.apiService,
   });
 
   final mealUrl = BaseURL.meal;
@@ -23,7 +23,7 @@ class MealApiService implements ServiceBase<Result> {
   @override
   Future<Result<Meals<MealsCategory>>> getCategories() async {
     try {
-      final response = await apiClient.makeRequest(
+      final response = await apiService.makeRequest(
         method: RequestMethod.get,
         path: '/list.php?c=list',
         baseUrl: mealUrl,
@@ -48,7 +48,7 @@ class MealApiService implements ServiceBase<Result> {
   Future<Result<Meals<MealsCategoryDetails>>> getCategoryDetails(
       String? category) async {
     try {
-      final response = await apiClient.makeRequest(
+      final response = await apiService.makeRequest(
         method: RequestMethod.get,
         path: '/filter.php?c=$category',
         baseUrl: mealUrl,
@@ -72,7 +72,7 @@ class MealApiService implements ServiceBase<Result> {
   @override
   Future<Result<Meals<MealDetails>>> getDetails(int? mealID) async {
     try {
-      final response = await apiClient.makeRequest(
+      final response = await apiService.makeRequest(
         method: RequestMethod.get,
         path: '/lookup.php?i=$mealID',
         baseUrl: mealUrl,

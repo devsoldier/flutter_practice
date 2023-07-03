@@ -15,7 +15,7 @@ import 'mocked_data/mock_data.dart';
 void main() {
   final dioAdapter = DioAdapter(dio: dio);
   GetIt.I.registerSingleton<MealApiService>(
-      MealApiService(apiClient: DefaultApiService(DioApiClient(dio))));
+      MealApiService(apiService: DefaultApiService(DioApiClient(dio))));
   group('Category bloc | ', () {
     final bloc = CategoryBloc();
     test('initial |', () {

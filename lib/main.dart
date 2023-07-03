@@ -23,7 +23,7 @@ void main() async {
 
 Future<void> dependenciesSetup() async {
   GetIt.I.registerSingleton<MealApiService>(
-    MealApiService(apiClient: DefaultApiService(DioApiClient(dio))),
+    MealApiService(apiService: DefaultApiService(DioApiClient(dio))),
   );
 
   final logInterceptor = LogInterceptor(

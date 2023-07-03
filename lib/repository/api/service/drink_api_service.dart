@@ -10,10 +10,10 @@ import 'package:flutter_practice/utilities/constant.dart';
 import 'package:flutter_practice/utilities/result.dart';
 
 class DrinkApiService implements ServiceBase<Result> {
-  final ApiService apiClient;
+  final ApiService apiService;
 
   DrinkApiService({
-    required this.apiClient,
+    required this.apiService,
   });
 
   final drinkURL = BaseURL.meal;
@@ -21,7 +21,7 @@ class DrinkApiService implements ServiceBase<Result> {
   @override
   Future<Result<Drinks<DrinksCategory>>> getCategories() async {
     try {
-      final response = await apiClient.makeRequest(
+      final response = await apiService.makeRequest(
         method: RequestMethod.get,
         path: '/list.php?c=list',
         baseUrl: drinkURL,
@@ -46,7 +46,7 @@ class DrinkApiService implements ServiceBase<Result> {
   Future<Result<Drinks<DrinksCategoryDetails>>> getCategoryDetails(
       String? category) async {
     try {
-      final response = await apiClient.makeRequest(
+      final response = await apiService.makeRequest(
         method: RequestMethod.get,
         path: '/filter.php?c=$category',
         baseUrl: drinkURL,
@@ -71,7 +71,7 @@ class DrinkApiService implements ServiceBase<Result> {
   @override
   Future<Result<Drinks<DrinkDetails>>> getDetails(int? mealID) async {
     try {
-      final response = await apiClient.makeRequest(
+      final response = await apiService.makeRequest(
         method: RequestMethod.get,
         path: '/lookup.php?i=$mealID',
         baseUrl: drinkURL,

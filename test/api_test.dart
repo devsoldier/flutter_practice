@@ -16,7 +16,7 @@ void main() {
 
   setUpAll(() {
     GetIt.I.registerSingleton<MealApiService>(
-        MealApiService(apiClient: DefaultApiService(DioApiClient(dio))));
+        MealApiService(apiService: DefaultApiService(DioApiClient(dio))));
 
     mealAPI = GetIt.I<MealApiService>();
     dioAdapter = DioAdapter(dio: dio);
