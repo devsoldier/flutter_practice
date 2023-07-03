@@ -1,7 +1,7 @@
+// ignore: unused_import
 import 'dart:developer';
 
 import 'package:flutter_practice/repository/api/service/meal_api_service.dart';
-import 'package:flutter_practice/repository/api/service/service_base/service_base.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meals.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meals_category.dart';
 import 'package:flutter_practice/utilities/result.dart';
@@ -29,7 +29,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         if (event is LoadCategoryData) {
           mealsCategory = await _mealAPI.getCategories();
           mealsCategoryDetails = await _mealAPI.getCategoryDetails(
-            event.categoryName ?? mealsCategory!.data!.meals.first!.strCategory,
+            event.categoryName ?? mealsCategory?.data?.meals.first?.strCategory,
           );
         }
 
@@ -45,7 +45,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
               mealsCategory!.message ?? 'failed to receive data'));
         }
       } catch (e, s) {
-        emit(CategoryErrorState('$e'));
+        emit(CategoryErrorState('$e/n$s'));
       }
     });
   }

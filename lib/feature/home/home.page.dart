@@ -49,9 +49,9 @@ class _HomePageState extends State<HomePage> {
                     width: 350,
                     child: Row(
                       children: [
-                        Column(
+                        const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Align(
                               alignment: AlignmentDirectional.centerStart,
                               child: Text(

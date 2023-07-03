@@ -1,3 +1,4 @@
+// ignore: unused_import
 import 'dart:developer';
 
 import 'package:flutter_practice/repository/api/service/meal_api_service.dart';
@@ -56,7 +57,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
               mealDetails!.message ?? 'failed to receive data'));
         }
       } catch (e, s) {
-        emit(DetailsErrorState('$e'));
+        emit(DetailsErrorState('$e\n$s'));
       }
     });
   }

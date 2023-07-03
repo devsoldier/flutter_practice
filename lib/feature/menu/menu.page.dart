@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_practice/feature/home/home.page.dart';
 import 'package:flutter_practice/feature/menu/widgets/menu_tile.dart';
 import 'package:flutter_practice/shared_widgets/search_bar.dart';

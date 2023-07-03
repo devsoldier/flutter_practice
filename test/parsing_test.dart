@@ -8,10 +8,7 @@
 import 'package:flutter_practice/repository/data_class/meals_data/meal_details.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meals.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meals_category.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:flutter_practice/main.dart';
 
 import 'mocked_data/mock_data.dart';
 

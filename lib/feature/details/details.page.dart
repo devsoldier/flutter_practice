@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_practice/feature/details/widgets/details_steps.dart';
-import 'package:flutter_practice/feature/home/home.page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -96,7 +94,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           borderColor: Colors.red,
                           onValueChanged: (value) {
                             setState(() {
-                              initialValue = value;
+                              initialValue = int.parse(value.toString());
                             });
                           }),
                     ),

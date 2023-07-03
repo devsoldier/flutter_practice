@@ -5,15 +5,15 @@ class Result<T> extends Equatable {
   final String? message;
   final T? data;
 
-  Result({
+  const Result({
     this.status,
     this.message,
     this.data,
   });
 
-  factory Result.loading() => Result(status: ResultStatus.loading);
+  factory Result.loading() => const Result(status: ResultStatus.loading);
 
-  factory Result.idle() => Result(status: ResultStatus.idle);
+  factory Result.idle() => const Result(status: ResultStatus.idle);
 
   factory Result.failure(dynamic message) => Result(
         status: ResultStatus.failure,
@@ -25,7 +25,7 @@ class Result<T> extends Equatable {
         data: result,
       );
 
-  factory Result.empty() => Result(status: ResultStatus.empty);
+  factory Result.empty() => const Result(status: ResultStatus.empty);
 
   @override
   String toString() {

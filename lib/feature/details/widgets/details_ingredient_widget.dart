@@ -31,7 +31,6 @@ class _DetailsIngredientWidgetState extends State<DetailsIngredientWidget> {
     return BlocBuilder<DetailsBloc, DetailsState>(
       builder: (context, state) {
         if (state is DetailsLoadedState) {
-          final details = state.mealDetails!.data!.meals;
           final ingredientsList = state.ingredients;
           final measuresList = state.measures;
           return Container(
