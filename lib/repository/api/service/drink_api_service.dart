@@ -2,14 +2,14 @@
 import 'dart:developer';
 import 'package:flutter_practice/repository/api/client/dio_config.dart';
 import 'package:flutter_practice/repository/api/service/api_service/api_service.dart';
-import 'package:flutter_practice/repository/api/service/api_service/service_base.dart';
+import 'package:flutter_practice/repository/api/service/api_service/service_interface.dart';
 import 'package:flutter_practice/repository/data_class/drinks_data/drink_details.dart';
 import 'package:flutter_practice/repository/data_class/drinks_data/drinks.dart';
 import 'package:flutter_practice/repository/data_class/drinks_data/drinks_category.dart';
 import 'package:flutter_practice/utilities/constant.dart';
 import 'package:flutter_practice/utilities/result.dart';
 
-class DrinkApiService implements ServiceBase<Result> {
+class DrinkApiService implements ServiceInterface<Result> {
   final ApiService apiService;
 
   DrinkApiService({

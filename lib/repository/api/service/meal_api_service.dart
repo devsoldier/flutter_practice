@@ -3,14 +3,14 @@ import 'dart:developer';
 
 import 'package:flutter_practice/repository/api/client/dio_config.dart';
 import 'package:flutter_practice/repository/api/service/api_service/api_service.dart';
-import 'package:flutter_practice/repository/api/service/api_service/service_base.dart';
+import 'package:flutter_practice/repository/api/service/api_service/service_interface.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meal_details.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meals.dart';
 import 'package:flutter_practice/repository/data_class/meals_data/meals_category.dart';
 import 'package:flutter_practice/utilities/constant.dart';
 import 'package:flutter_practice/utilities/result.dart';
 
-class MealApiService implements ServiceBase<Result> {
+class MealApiService implements ServiceInterface<Result> {
   // final ApiClientBase apiClient;
   final ApiService apiService;
 

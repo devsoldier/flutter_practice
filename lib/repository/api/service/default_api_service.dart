@@ -4,7 +4,7 @@ import 'package:flutter_practice/repository/api/service/api_service/api_service.
 import 'package:flutter_practice/utilities/constant.dart';
 import 'package:flutter_practice/utilities/result.dart';
 
-class DefaultApiService<T> implements ApiService<T> {
+class DefaultApiService<T> extends ApiService<T> {
   final ApiClientBase apiClient;
 
   DefaultApiService(this.apiClient);
